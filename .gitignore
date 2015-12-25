@@ -1,0 +1,8 @@
+/.idea
+/vendor
+/conf
+composer.lock
+app.yaml
+cron.yaml
+php.ini
+queue.yaml

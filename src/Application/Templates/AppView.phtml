@@ -1,0 +1,116 @@
+<?php
+/**
+ * @var \Jleagle\Steam\Application\Views\AppView $this
+ */
+?>
+
+<div class="page-header">
+  <h1><?= $this->getApp()->name ?></h1>
+</div>
+
+<?= $this->getAd() ?>
+
+<div class="row">
+  <div class="col-xs-9">
+
+    <h2>Info</h2>
+
+    <table class="table table-hover">
+      <tr>
+        <td>Type</td>
+        <td><?= $this->getApp()->type ?></td>
+      </tr>
+      <tr>
+        <td>Required Age</td>
+        <td><?= $this->getApp()->required_age ?> years</td>
+      </tr>
+      <tr>
+        <td>Free</td>
+        <td><?= $this->getApp()->is_free ? 'Yes' : 'No' ?></td>
+      </tr>
+      <tr>
+        <td>Languages</td>
+        <td><?= $this->getApp()->supported_languages ?></td>
+      </tr>
+      <tr>
+        <td>Release Date</td>
+        <?php $release = json_decode($this->getApp()->release_date); ?>
+        <td><?= $release->coming_soon . $release->date ?></td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" width="1%">Featured Achievements</td>
+        <td>
+
+          <?php
+          $json = json_decode($this->getApp()->achievements, true);
+          $json['highlighted'] = $json['highlighted'] ?: [];
+          foreach($json['highlighted'] as $a)
+          { ?>
+            <img src="<?= $a['path'] ?>" alt="" data-toggle="tooltip"
+                 data-placement="bottom" title="<?= $a['name'] ?>"
+                 class="achievement">
+          <?php } ?>
+
+        </td>
+      </tr>
+    </table>
+
+  </div>
+  <div class="col-xs-3">
+
+    <h2>Links</h2>
+    <?= $this->getLinks() ?>
+
+  </div>
+</div>
+
+<h3>Movies</h3>
+
+<?php
+$movies = json_decode($this->getApp()->movies, true);
+if($movies)
+{
+  ?>
+  <div class="row row-eq-height">
+    <?php foreach($movies as $movie)
+    { ?>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <p>
+          <?= $movie['name'] ?>
+          <a href="<?= $movie['webm']['max'] ?>" target="_blank">
+            <img src="<?= $movie['thumbnail'] ?>" alt="">
+          </a>
+        </p>
+      </div>
+    <?php } ?>
+  </div>
+<?php }
+else
+{ ?>
+  <p>No Movies</p>
+<?php } ?>
+
+<h3>Screenshots</h3>
+
+<?php
+$screenshots = json_decode($this->getApp()->screenshots, true);
+if($screenshots)
+{
+  ?>
+  <div class="row row-eq-height">
+    <?php foreach($screenshots as $app)
+    { ?>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <p>
+          <a href="<?= $app['path_full'] ?>" class="swipebox">
+            <img src="<?= $app['path_thumbnail'] ?>">
+          </a>
+        </p>
+      </div>
+    <?php } ?>
+  </div>
+<?php }
+else
+{ ?>
+  <p>No Screenshots</p>
+<?php } ?>

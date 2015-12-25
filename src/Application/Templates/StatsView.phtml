@@ -1,0 +1,70 @@
+<?php
+/**
+ * @var Jleagle\Steam\Application\Views\StatsView $this
+ */
+use Jleagle\Steam\Application\Enums\UserColsEnum;
+
+?>
+
+<div class="page-header">
+  <h1>Stats</h1>
+</div>
+
+<?= $this->getAd() ?>
+
+<h4>Users around the world</h4>
+<div class="chart" id="countries"></div>
+
+<h4>Users at each level</h4>
+<div class="chart" id="levels"></div>
+
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1.1", {packages: ["geochart", "line"]});
+  google.setOnLoadCallback(drawCountryChart);
+  google.setOnLoadCallback(drawLevelsChart);
+
+  function drawCountryChart()
+  {
+    var data = google.visualization.arrayToDataTable(
+      <?= $this->getCountryData() ?>
+    );
+
+    var options = {
+      keepAspectRatio: true,
+      displayMode:     'regions',
+      height:          400,
+      domain:          'IN'
+    };
+
+    var chart = new google.visualization.GeoChart(
+      document.getElementById('countries')
+    );
+
+    chart.draw(data, options);
+  }
+
+  function drawLevelsChart()
+  {
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'Level');
+    data.addColumn('number', 'Count');
+    data.addRows(<?= $this->getLevelsData() ?>);
+
+    var options = {
+      legend: {
+        position: 'none'
+      },
+      hAxis:  {
+        //logScale: true
+      }
+    };
+
+    var chart = new google.charts.Line(
+      document.getElementById('levels')
+    );
+
+    chart.draw(data, google.charts.Line.convertOptions(options));
+  }
+</script>

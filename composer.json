@@ -1,0 +1,36 @@
+{
+  "require": {
+    "cubex/framework": "~2.1",
+    "packaged/dispatch": "~1.0",
+    "packaged/helpers": "~1.0",
+    "stack/builder": "~1.0",
+    "illuminate/database": "~4.0",
+    "jleagle/html-builder": "~0.0",
+    "jleagle/steam-api-client": "~0.0",
+    "jleagle/app-engine-stubs": "*",
+    "kilte/pagination": "~1.1",
+    "tomwalder/php-gds": "~2.0",
+    "lightopenid/lightopenid": "dev-master",
+    "robmorgan/phinx": "^0.4.6",
+    "frlnc/php-slack": "~1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jleagle\\Steam\\": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:jleagle/html-builder.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:jleagle/steam-api-client.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:jleagle/app-engine-stubs.git"
+    }
+  ]
+}

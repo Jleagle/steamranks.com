@@ -1,0 +1,202 @@
+<?php
+/**
+ * @var \Jleagle\Steam\Application\Views\UserView $this
+ */
+
+use Jleagle\Steam\Application\Enums\SortFieldEnum;
+?>
+
+<div class="page-header">
+  <?php if(!$this->getUser()['rank_level'])
+  { ?>
+    <div class="alert alert-danger" role="alert">
+      <?= $this->getUser()['name'] ?>
+      is new and has not been ranked yet, check back in 24 hours.
+    </div>
+  <? } ?>
+  <h1>
+    <img src="<?= $this->getUser()['avatar_large'] ?>" alt="" class="avatar"/>
+    <?= $this->getUser()['name']; ?>
+    <small>
+      <?= $this->getUser()['real_name']; ?>
+      <?= $this->getCountryFlag($this->getUser()['country']) ?>
+    </small>
+    <a href="<?= $this->getUser()['profile'] ?>" target="_blank">
+      <img src="/img/steam_square.png" alt="" class="steam pull-right"/>
+    </a>
+  </h1>
+</div>
+
+<?= $this->getAd() ?>
+
+
+<?php
+if($this->getUser()['xp'])
+{
+  $xp = $this->getUser()['xp'];
+  $needed = $this->getUser()['xp_needed'];
+  $left = $this->getUser()['xp_current'];
+  $right = $xp + $needed;
+  $range = $right - $left;
+  $done = $range - $needed;
+  $percent = ($done / $range) * 100;
+  $nicePercent = max(round($percent), 10); // So you can always see the text
+}
+else
+{
+  $left = $xp = $right = $nicePercent = 0;
+  $percent = 0;
+}
+?>
+<a class="progress" data-toggle="tooltip" data-placement="bottom"
+   title="<?= $left . 'xp - ' . $xp . 'xp - ' . $right . 'xp' ?>"
+   href="/experience/<?= $this->getUser()['level'] ?>" style="display: block;">
+  <div class="progress-bar progress-bar-striped"
+       style="width: <?= $percent ?>%;">
+    Level <?= $this->getUser()['level'] . ' (' . $nicePercent . '%)' ?>
+  </div>
+</a>
+
+
+<div class="row">
+
+  <div class="col-xs-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Details</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed table-details">
+          <tr>
+            <td>Friends</td>
+            <td><?= $this->getUser()['friends'] ?></td>
+          </tr>
+          <tr>
+            <td>Time on Steam</td>
+            <td>
+              <?= $this->getMinutes(
+                time() - $this->getUser()['time_on_steam'],
+                true
+              ) ?>
+            </td>
+          </tr>
+          <tr>
+            <td>Badges</td>
+            <td><?= $this->getUser()['badges'] ?></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Games</h3>
+      </div>
+      <div class="panel-body">
+
+        <table class="table table-condensed table-details">
+          <tr>
+            <td>Total</td>
+            <td><?= number_format($this->getUser()['games']) ?></td>
+          </tr>
+          <tr>
+            <td>Played</td>
+            <td><?= number_format(
+                count(array_filter($this->getUser()['games_json']))
+              ) ?></td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td>
+              <?= $this->getMinutes($this->getUser()['time'] * 60) ?>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Ranks</h3>
+      </div>
+      <div class="panel-body">
+
+        <table class="table table-condensed table-details">
+          <tr>
+            <td>Level</td>
+            <td>
+              <?php //print_r($this->getUser()); die; ?>
+              <a href="<?= '/users/'.SortFieldEnum::LEVEL.'/'.ceil($this->getUser()['rank_level']/50) ?>">
+                <?= $this->getRankLine('rank_' . SortFieldEnum::LEVEL) ?>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>Games</td>
+            <td><?= $this->getRankLine('rank_' . SortFieldEnum::GAMES) ?></td>
+          </tr>
+          <tr>
+            <td>Badges</td>
+            <td><?= $this->getRankLine('rank_' . SortFieldEnum::BADGES) ?></td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td><?= $this->getRankLine('rank_' . SortFieldEnum::TIME) ?></td>
+          </tr>
+          <tr>
+            <td>Friends</td>
+            <td><?= $this->getRankLine('rank_' . SortFieldEnum::FRIENDS) ?></td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <?php
+  $show = 20;
+  $i = 1;
+  if(is_array($this->getUser()['games_json']))
+  {
+    foreach($this->getUser()['games_json'] as $game => $time)
+    {
+
+      $hidden = ($time == 0 || $i > $show) ? 'hidden' : '';
+      ?>
+      <div
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3 game-div <?= $hidden ? 'hidden' : '' ?>">
+        <p>
+          <?= $this->getMinutes($time * 60) ?><br/>
+          <a href="/apps/<?= $game ?>">
+            <img
+              <?= $hidden ? 'data-' : '' ?>src="http://cdn.akamai.steamstatic.com/steam/apps/<?= $game ?>/header.jpg"
+              class="game"/>
+          </a>
+        </p>
+      </div>
+      <?php
+      $i++;
+    }
+  }
+  ?>
+</div>
+
+<?php
+if($this->getUser()['games'] > count(
+    array_filter($this->getUser()['games_json'])
+  ) || $this->getUser()['games'] > $show
+)
+{
+  ?>
+  <button type="button" class="btn btn-primary btn-xs pull-right"
+          id="show-all-games">Show all games
+  </button>
+<?php } ?>

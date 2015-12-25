@@ -1,0 +1,111 @@
+<?php
+use Jleagle\Steam\Application\Helpers\Session;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Steam Ranks</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"
+          rel="stylesheet" type="text/css">
+    <link
+        href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css">
+    <link href="/css/vendor/swipebox.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(
+        window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga'
+    );
+
+    ga('create', 'UA-125104-31', 'auto');
+    ga('send', 'pageview');
+    ga('set', '&uid', '<?= Session::get(Session::USER_ID) ?>');
+</script>
+
+<a class="toTop">TOP <i class="fa fa-arrow-up"></i></a>
+
+<nav
+    class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/users" class="navbar-brand">Steam Ranks</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar">
+
+            <ul class="nav navbar-nav">
+                <li><a href="/users">Users</a></li>
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="/experience">XP Calculator</a></li>
+                <li><a href="/donate">Donate</a></li>
+                <li><a href="/faqs">Faqs</a></li>
+            </ul>
+
+
+            <form class="navbar-form navbar-right" role="search" action="/users/id" method="post">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder="Profile URL" required="required"
+                           name="search">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">Find</button>
+          </span>
+                </div>
+
+                <?php if (Session::exists(Session::USER_ID)) { ?>
+                    <a href="/users/<?= Session::get(Session::USER_ID) ?>" class="btn btn-success">Profile</a>
+                <?php } else { ?>
+                    <a href="/login" class="btn btn-success">Login</a>
+                <?php } ?>
+            </form>
+
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+    <?= $this->content(); ?>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/floatthead/1.3.2/jquery.floatThead.min.js"></script>
+<script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!--<script src="/js/infiniteLoading.js"></script>-->
+<script src="/js/bootstrap-hover-dropdown.js"></script>
+<script src="/js/vendor/js.cookie.js"></script>
+<script src="/js/vendor/jquery.swipebox.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/tabs.js"></script>
+
+</body>
+</html>

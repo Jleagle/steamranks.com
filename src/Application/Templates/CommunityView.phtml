@@ -1,0 +1,155 @@
+<?php
+/**
+ * @var Jleagle\Steam\Application\Views\CommunityView $this
+ */
+
+use Jleagle\Steam\Application\Structs\SlackHistoryRowStruct;
+
+?>
+
+<div class="page-header">
+  <a href="https://steamranks.slack.com" class="btn btn-primary pull-right">
+    Go to the community
+  </a>
+
+  <div class="pull-right" style="margin-right: 20px;">
+    <a href="https://twitter.com/SteamRanks" class="twitter-follow-button"
+       data-show-count="false" data-size="large">Follow @SteamRanks</a>
+  </div>
+
+  <h1>Community</h1>
+</div>
+
+<?= $this->getAd() ?>
+
+<?php if($this->getResponse())
+{ ?>
+  <div class="alert alert-<?= $this->getClass() ?>" role="alert">
+    <?= $this->getMessage() ?>
+  </div>
+<?php }
+?>
+
+<div class="panel panel-default" id="community">
+  <div class="panel-heading">
+    <button type="button" class="close pull-right"
+            aria-label="Close">&times;</button>
+    <h3 class="panel-title">Sign Up</h3>
+  </div>
+  <div class="panel-body">
+
+    <p>Our community is built on top of
+      <a href="https://slack.com/" target="_blank">Slack</a>.
+       To sign up, just fill in the form below to recieve an invite.</p>
+
+    <p>We do not keep any form data, everything is handled by Slack.</p>
+
+    <form action="/community" method="post">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label for="first_name">First name</label>
+            <input name="first_name" type="text" class="form-control"
+                   id="first_name"
+                   placeholder="First name">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label for="last_name">Last name</label>
+            <input name="last_name" type="text" class="form-control"
+                   id="last_name"
+                   placeholder="Last name">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email"
+                   placeholder="Email" required="required">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="form-group">
+            <label>&nbsp;</label>
+
+            <div>
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<h3>Recent Activity</h3>
+
+<ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
+  <?php foreach($this->getChannel() as $channel)
+  { ?>
+    <li role="presentation"
+        class="<?= $channel->id == 'C0ESU7LAW' ? 'active' : '' ?>">
+      <a href="#c<?= $channel->id ?>" role="tab"
+         data-toggle="tab"><?= $channel->name ?></a>
+    </li>
+  <?php } ?>
+</ul>
+<div class="tab-content">
+
+  <?php foreach($this->getChannel() as $channel)
+  { ?>
+    <div role="tabpanel"
+         class="tab-pane <?= $channel->id == 'C0ESU7LAW' ? 'active' : '' ?>"
+         id="c<?= $channel->id ?>">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">Channel Members</div>
+            <ul class="list-group">
+              <?php foreach($channel->members as $member)
+              { ?>
+                <li class="list-group-item">
+                  <?= $this->getUsers()[$member]->name ?>
+                  <!--(--><? // $this->getUsers()[$member]->presence
+                  ?><!--)-->
+                </li>
+              <?php } ?>
+            </ul>
+          </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-9">
+          <?php
+          /** @var SlackHistoryRowStruct $item */
+          foreach($this->getHistory()[$channel->id] as $item)
+          { ?>
+            <p>
+              <strong><?= $this->getUsers()[$item->user]->name ?></strong>
+              <br/><?= $item->text ?>
+            </p>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+  <?php } ?>
+
+</div>
+
+<script>
+  !function (d, s, id)
+  {
+    var js, fjs = d.getElementsByTagName(
+      s
+    )[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id))
+    {
+      js = d.createElement(s);
+      js.id = id;
+      js.src = p + '://platform.twitter.com/widgets.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }
+  }(document, 'script', 'twitter-wjs');
+</script>

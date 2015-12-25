@@ -1,0 +1,38 @@
+<?php
+/**
+ * @var \Jleagle\Steam\Application\Views\FaqsView $this
+ */
+?>
+
+<div class="page-header">
+  <h1>FAQs</h1>
+</div>
+
+<?= $this->getAd() ?>
+
+<h4>I can not find a user</h4>
+<p>We may not have scanned their Steam profile yet, you can add users to our
+   database by searching for them from the header and they will be ranked within
+   24 hours.</p>
+
+<h4>Why are some of my stats zero?</h4>
+<p>Steam Ranks may not have access to your stats, you can change this by
+   editing
+   your profile at <a
+    href="http://steamcommunity.com">steamcommunity.com</a>.
+</p>
+
+<h4>How can I help out?</h4>
+<p>Please <a href="/donate">donate</a> :)</p>
+
+<h4>How does Steam Ranks gather user data?</h4>
+<p>When a users profile is viewed, we use the Steam API to retrieve the user
+   information. We then record all the user's friends to add them to our
+   databse
+   too.</p>
+
+<h4>Player list does not match a players profile</h4>
+<p>Everything is cached and things can become out of sync but after a day or
+   so
+   it should sync up again. Player ranks get updated daily at midnight
+   UTC.</p>

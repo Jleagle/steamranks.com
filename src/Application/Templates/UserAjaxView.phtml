@@ -1,0 +1,50 @@
+<?php
+/**
+ * @var \Jleagle\Steam\Application\Views\UserAjaxView $this
+ */
+?>
+
+<?php if($this->getPage() > 1)
+{ ?>
+  <tr class="loadPrevPage">
+    <td colspan="9" align="center">
+      Load previous page
+    </td>
+  </tr>
+<? }
+?>
+
+<?php foreach($this->getUsers() as $k => $user)
+{
+  ?>
+  <tr>
+    <td class="bold">
+      <?= (($this->getPage() - 1) * 50) + ($k + 1) ?>
+    </td>
+    <td width="1%" class="img">
+      <a href="/users/<?= $user->id ?>">
+        <?= $this->getAvatar($user) ?>
+      </a>
+    </td>
+    <td>
+      <a href="/users/<?= $user->id ?>">
+        <?= $user->name ?: '--' ?>
+      </a>
+    </td>
+    <td>
+      <a href="/experience/<?= $user->level ?>">
+        <?= number_format($user->level) ?>
+      </a>
+    </td>
+    <td><?= number_format($user->games) ?></td>
+    <td><?= number_format($user->badges) ?></td>
+    <td><span data-toggle="tooltip" data-placement="right"
+              title="<?= $this->getMinutes($user->time * 60) ?>">
+            <?= number_format($user->time) ?>
+          </span></td>
+    <td><?= number_format($user->friends) ?></td>
+    <td class="img"><?= $this->getCountryFlag($user->country) ?></td>
+  </tr>
+  <?php
+}
+?>

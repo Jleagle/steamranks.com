@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var Jleagle\Steam\Application\Views\ExperienceView $this
+ */
+?>
+
+<div class="page-header">
+  <h1>Experience Calculator</h1>
+</div>
+
+<?= $this->getAd() ?>
+
+<div class="table-responsive">
+
+  <table class="table table-bordered table-striped table-hover table-condensed">
+    <tr>
+      <th width="25%">Level</th>
+      <th width="25%">Start XP</th>
+      <th width="25%">End XP</th>
+      <th width="25%">Difference</th>
+    </tr>
+  </table>
+
+  <?php
+  $class = 'success scrollTo';
+  foreach($this->getTableData() as $rows)
+  {
+    ?>
+    <table class="table table-bordered table-striped table-hover table-condensed">
+      <?php
+      foreach($rows as $item)
+      {
+        ?>
+        <tr class="<?= $this->getRowClass($item) ?>">
+          <td width="25%">Level <?= number_format($item->level) ?></td>
+          <td width="25%"><?= number_format($item->start) ?></td>
+          <td width="25%"><?= number_format($item->end) ?></td>
+          <td width="25%"><?= number_format($item->diff) ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+    </table>
+    <?php
+  }
+  ?>
+
+</div>

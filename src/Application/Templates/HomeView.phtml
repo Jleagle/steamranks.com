@@ -1,0 +1,41 @@
+<?php
+/**
+ * @var Jleagle\Steam\Application\Views\ExperienceView $this
+ */
+?>
+
+<div class="page-header">
+  <h1>Steam Ranks</h1>
+</div>
+
+<?= $this->getAd() ?>
+
+<p>See where you come against the rest of the world.</p>
+
+<a href="https://twitter.com/SteamRanks" class="twitter-follow-button"
+   data-show-count="false" data-size="large">Follow @SteamRanks</a>
+
+<a href="https://twitter.com/intent/tweet?screen_name=SteamRanks"
+   class="twitter-mention-button" data-size="large" data-related="SteamRanks">
+  Tweet to @SteamRanks
+</a>
+
+
+<script>window.twttr = (function (d, s, id)
+  {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function (f)
+    {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>

@@ -130,27 +130,44 @@ else
           <tr>
             <td>Level</td>
             <td>
-              <?php //print_r($this->getUser()); die; ?>
-              <a href="<?= '/users/'.SortFieldEnum::LEVEL.'/'.ceil($this->getUser()['rank_level']/50) ?>">
+              <?php $rank = $this->getUser()['rank_level']; ?>
+              <a href="<?= '/users/'.SortFieldEnum::LEVEL.'/'.ceil($rank/50) ?>">
                 <?= $this->getRankLine('rank_' . SortFieldEnum::LEVEL) ?>
               </a>
             </td>
           </tr>
           <tr>
             <td>Games</td>
-            <td><?= $this->getRankLine('rank_' . SortFieldEnum::GAMES) ?></td>
+            <td>
+              <?php $rank = $this->getUser()['rank_games']; ?>
+              <a href="<?= '/users/'.SortFieldEnum::GAMES.'/'.ceil($rank/50) ?>">
+                <?= $this->getRankLine('rank_' . SortFieldEnum::GAMES) ?>
+              </a>
+            </td>
           </tr>
           <tr>
             <td>Badges</td>
-            <td><?= $this->getRankLine('rank_' . SortFieldEnum::BADGES) ?></td>
+            <td>
+              <?php $rank = $this->getUser()['rank_badges']; ?>
+              <a href="<?= '/users/'.SortFieldEnum::BADGES.'/'.ceil($rank/50) ?>">
+                <?= $this->getRankLine('rank_' . SortFieldEnum::BADGES) ?>
+              </a>
           </tr>
           <tr>
             <td>Time</td>
-            <td><?= $this->getRankLine('rank_' . SortFieldEnum::TIME) ?></td>
+            <td>
+              <?php $rank = $this->getUser()['rank_time']; ?>
+              <a href="<?= '/users/'.SortFieldEnum::TIME.'/'.ceil($rank/50) ?>">
+                <?= $this->getRankLine('rank_' . SortFieldEnum::TIME) ?>
+              </a>
           </tr>
           <tr>
             <td>Friends</td>
-            <td><?= $this->getRankLine('rank_' . SortFieldEnum::FRIENDS) ?></td>
+            <td>
+              <?php $rank = $this->getUser()['rank_friends']; ?>
+              <a href="<?= '/users/'.SortFieldEnum::FRIENDS.'/'.ceil($rank/50) ?>">
+                <?= $this->getRankLine('rank_' . SortFieldEnum::FRIENDS) ?>
+              </a>
           </tr>
         </table>
 

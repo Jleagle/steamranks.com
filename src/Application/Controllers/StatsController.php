@@ -18,6 +18,8 @@ class StatsController extends AbstractController
 
   public function stats()
   {
+    $this->layout()->setData('title', 'Stats');
+
     $cache = new StatsCountriesCache();
     $countries = $cache->retrieve();
 

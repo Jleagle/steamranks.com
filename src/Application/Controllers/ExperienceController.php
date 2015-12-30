@@ -15,6 +15,8 @@ class ExperienceController extends AbstractController
 
   public function levels($level = null)
   {
+    $this->layout()->setData('title', 'Experience Chart (XP)');
+
     return new ExperienceView($level);
   }
 }

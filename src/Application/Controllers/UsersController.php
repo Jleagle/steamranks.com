@@ -30,6 +30,9 @@ class UsersController extends AbstractController
 
   public function users($order = 'level', $page = 1)
   {
+    // Title
+    $this->layout()->setData('title', 'Users ordered by ' . ucwords($order));
+
     $cache = new UsersCountCache();
     $count = $cache->retrieve();
 
@@ -83,6 +86,12 @@ class UsersController extends AbstractController
     // Get total users
     $cache = new UsersCountCache();
     $users = $cache->retrieve();
+
+    // Title
+    $this->layout()->setData(
+      'title',
+      $user->name . ' (' . $user->real_name . ')'
+    );
 
     return new UserView($user, $users);
   }

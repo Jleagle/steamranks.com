@@ -14,6 +14,8 @@ class FaqsController extends AbstractController
 
   public function faqs()
   {
+    $this->layout()->setData('title', 'FAQs');
+
     return new FaqsView();
   }
 }

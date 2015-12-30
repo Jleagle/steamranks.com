@@ -14,6 +14,8 @@ class DonateController extends AbstractController
 
   public function donate()
   {
+    $this->layout()->setData('title', 'Donate');
+
     return new DonateView();
   }
 }

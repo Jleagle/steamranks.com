@@ -14,6 +14,8 @@ class HomeController extends AbstractController
 
   public function home()
   {
+    $this->layout()->setData('title', 'Home');
+
     return new HomeView();
   }
 }

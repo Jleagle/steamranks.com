@@ -57,6 +57,8 @@ class AppsController extends AbstractController
     $cache = new AppsCountCache();
     $count = $cache->retrieve();
 
+    $this->layout()->setData('title', 'Apps');
+
     return new AppListView($apps, $count, $search, $minCharacters, $types);
   }
 
@@ -102,7 +104,6 @@ class AppsController extends AbstractController
         Objects::property($response, 'metacritic', [])
       );
 
-
       $app->categories = json_encode(
         Objects::property($response, 'categories', [])
       );
@@ -139,8 +140,7 @@ class AppsController extends AbstractController
       $app->save();
     }
 
-//    print_r($response);
-//    die;
+    $this->layout()->setData('title', $app->name);
 
     return new AppView($app);
   }

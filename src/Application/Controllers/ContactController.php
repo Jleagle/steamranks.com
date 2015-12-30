@@ -14,6 +14,8 @@ class ContactController extends AbstractController
 
   public function contact()
   {
+    $this->layout()->setData('title', 'Contact');
+
     return new ContactView();
   }
 }

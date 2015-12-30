@@ -21,6 +21,9 @@ class ApiController extends AbstractController
 
   public function api()
   {
+    // Title
+    $this->layout()->setData('title', 'API');
+
     return new ApiView($this->_getRequest()->path());
   }
 

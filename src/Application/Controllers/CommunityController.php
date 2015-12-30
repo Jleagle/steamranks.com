@@ -40,6 +40,8 @@ class CommunityController extends AbstractController
       $history[$channel->id] = $cache->retrieve();
     }
 
+    $this->layout()->setData('title', 'Community');
+
     return new CommunityView($users, $channels, $history, $response);
   }
 

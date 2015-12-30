@@ -2,6 +2,8 @@
 /**
  * @var \Jleagle\Steam\Application\Views\AppView $this
  */
+
+use Packaged\Helpers\Arrays;
 ?>
 
 <div class="page-header">
@@ -43,8 +45,8 @@
 
           <?php
           $json = json_decode($this->getApp()->achievements, true);
-          $json['highlighted'] = $json['highlighted'] ?: [];
-          foreach($json['highlighted'] as $a)
+          $highlighted = Arrays::value($json, 'highlighted', []);
+          foreach($highlighted as $a)
           { ?>
             <img src="<?= $a['path'] ?>" alt="" data-toggle="tooltip"
                  data-placement="bottom" title="<?= $a['name'] ?>"

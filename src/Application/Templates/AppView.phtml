@@ -23,8 +23,10 @@ use Packaged\Helpers\Arrays;
         <td><?= $this->getApp()->type ?></td>
       </tr>
       <tr>
-        <td>Required Age</td>
-        <td><?= $this->getApp()->required_age ?> years</td>
+        <td>Age restriction</td>
+        <td><?= $this->getApp()->required_age
+            ? $this->getApp()->required_age . ' years'
+            : 'None' ?></td>
       </tr>
       <tr>
         <td>Free</td>

@@ -2,8 +2,6 @@
 /**
  * @var \Jleagle\Steam\Application\Views\UserView $this
  */
-
-use Jleagle\Steam\Application\Enums\SortFieldEnum;
 ?>
 
 <div class="page-header">
@@ -57,124 +55,51 @@ else
   </div>
 </a>
 
-
-<div class="row">
-
-  <div class="col-xs-12 col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Details</h3>
-      </div>
-      <div class="panel-body">
-        <table class="table table-condensed table-details">
-          <tr>
-            <td>Friends</td>
-            <td><?= $this->getUser()['friends'] ?></td>
-          </tr>
-          <tr>
-            <td>Time on Steam</td>
-            <td>
-              <?= $this->getMinutes(
-                time() - $this->getUser()['time_on_steam'],
-                true
-              ) ?>
-            </td>
-          </tr>
-          <tr>
-            <td>Badges</td>
-            <td><?= $this->getUser()['badges'] ?></td>
-          </tr>
-        </table>
-      </div>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Stats</h3>
   </div>
+  <table class="table" style="table-layout: fixed">
+    <thead>
+    <tr>
+      <th width="15%"></th>
+      <th width="15%">Level</th>
+      <th width="15%">Games</th>
+      <th width="15%">Badges</th>
+      <th width="15%">Friends</th>
+      <th width="25%">Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?= $this->getValueRow() ?>
+    <?= $this->getRankRow() ?>
+    <?= $this->getPercentileRow() ?>
+    </tbody>
+  </table>
+</div>
 
-  <div class="col-xs-12 col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Games</h3>
-      </div>
-      <div class="panel-body">
-
-        <table class="table table-condensed table-details">
-          <tr>
-            <td>Total</td>
-            <td><?= number_format($this->getUser()['games']) ?></td>
-          </tr>
-          <tr>
-            <td>Played</td>
-            <td><?= number_format(
-                count(array_filter($this->getUser()['games_json']))
-              ) ?></td>
-          </tr>
-          <tr>
-            <td>Time</td>
-            <td>
-              <?= $this->getMinutes($this->getUser()['time'] * 60) ?>
-            </td>
-          </tr>
-        </table>
-
-      </div>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Info</h3>
   </div>
+  <div class="panel-body">
 
-  <div class="col-xs-12 col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Ranks</h3>
-      </div>
-      <div class="panel-body">
+    <table class="table table-condensed table-details">
+      <tr>
+        <td>Games Played</td>
+        <td><?= number_format(
+            count(array_filter($this->getUser()['games_json']))
+          ) ?></td>
+      </tr>
+      <tr>
+        <td>Time on Steam</td>
+        <td>
+          <?= $this->getMinutes(time() - $this->getUser()['time_on_steam']) ?>
+        </td>
+      </tr>
+    </table>
 
-        <table class="table table-condensed table-details">
-          <tr>
-            <td>Level</td>
-            <td>
-              <?php $rank = $this->getUser()['rank_level']; ?>
-              <a href="<?= '/users/'.SortFieldEnum::LEVEL.'/'.ceil($rank/50) ?>">
-                <?= $this->getRankLine('rank_' . SortFieldEnum::LEVEL) ?>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Games</td>
-            <td>
-              <?php $rank = $this->getUser()['rank_games']; ?>
-              <a href="<?= '/users/'.SortFieldEnum::GAMES.'/'.ceil($rank/50) ?>">
-                <?= $this->getRankLine('rank_' . SortFieldEnum::GAMES) ?>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Badges</td>
-            <td>
-              <?php $rank = $this->getUser()['rank_badges']; ?>
-              <a href="<?= '/users/'.SortFieldEnum::BADGES.'/'.ceil($rank/50) ?>">
-                <?= $this->getRankLine('rank_' . SortFieldEnum::BADGES) ?>
-              </a>
-          </tr>
-          <tr>
-            <td>Time</td>
-            <td>
-              <?php $rank = $this->getUser()['rank_time']; ?>
-              <a href="<?= '/users/'.SortFieldEnum::TIME.'/'.ceil($rank/50) ?>">
-                <?= $this->getRankLine('rank_' . SortFieldEnum::TIME) ?>
-              </a>
-          </tr>
-          <tr>
-            <td>Friends</td>
-            <td>
-              <?php $rank = $this->getUser()['rank_friends']; ?>
-              <a href="<?= '/users/'.SortFieldEnum::FRIENDS.'/'.ceil($rank/50) ?>">
-                <?= $this->getRankLine('rank_' . SortFieldEnum::FRIENDS) ?>
-              </a>
-          </tr>
-        </table>
-
-      </div>
-    </div>
   </div>
-
 </div>
 
 <div class="row">

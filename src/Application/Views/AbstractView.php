@@ -16,7 +16,7 @@ abstract class AbstractView extends TemplatedViewModel
     }
     else
     {
-      return $number . $ends[$number % 10];
+      return number_format($number) . $ends[$number % 10];
     }
   }
 

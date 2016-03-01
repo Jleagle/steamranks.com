@@ -85,7 +85,7 @@ class UsersController extends AbstractController
 
     // Get total users
     $cache = new UsersCountCache();
-    $users = $cache->retrieve();
+    $usersCount = $cache->retrieve();
 
     // Title
     $this->layout()->setData(
@@ -93,7 +93,7 @@ class UsersController extends AbstractController
       $user->name . ' (' . $user->real_name . ')'
     );
 
-    return new UserView($user, $users);
+    return new UserView($user, $usersCount);
   }
 
   public function id()

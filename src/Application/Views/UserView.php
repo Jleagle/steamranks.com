@@ -1,14 +1,20 @@
 <?php
 namespace Jleagle\Steam\Application\Views;
 
+use Jleagle\HtmlBuilder\Tags\A;
+use Jleagle\HtmlBuilder\Tags\Tables\Td;
+use Jleagle\HtmlBuilder\Tags\Tables\Th;
+use Jleagle\HtmlBuilder\Tags\Tables\Tr;
+use Jleagle\Steam\Application\Enums\SortFieldEnum;
 use Jleagle\Steam\Application\Models\User;
+use Packaged\Helpers\Arrays;
 
 class UserView extends AbstractView
 {
   protected $_user;
-  protected $_users;
+  protected $_usersCount;
 
-  public function __construct(User $user, $users)
+  public function __construct(User $user, $usersCount)
   {
     $user = $user->toArray();
 
@@ -28,7 +34,7 @@ class UserView extends AbstractView
     $user['friends_json'] = json_decode($user['friends_json'], true);
 
     $this->_user = $user;
-    $this->_users = $users;
+    $this->_usersCount = $usersCount;
   }
 
   /**
@@ -42,17 +48,71 @@ class UserView extends AbstractView
   /**
    * @return int
    */
-  public function getUsers()
+  public function getUsersCount()
   {
-    return $this->_users;
+    return $this->_usersCount;
   }
 
-  public function getRankLine($column)
+  public function getValueRow()
   {
-    $rank = $this->getUser()[$column];
+    $cols = [
+      new Th('Value')
+    ];
 
-    $percent = ($rank / $this->getUsers()) * 100;
+    foreach(SortFieldEnum::all() as $col)
+    {
+      switch($col)
+      {
+        case SortFieldEnum::TIME:
+          $val = Arrays::value($this->getUser(), $col, 0);
+          $val = $this->getMinutes($val * 60);
+          break;
+        default:
+          $val = number_format(Arrays::value($this->getUser(), $col, 0));
+          break;
+      }
 
-    return $this->getOrdinal($rank) . ' - Top ' . round($percent) . '%';
+      $cols[] = new Td($val);
+    }
+
+    return new Tr($cols);
+  }
+
+  public function getRankRow()
+  {
+    $cols = [
+      new Th('Rank')
+    ];
+
+    foreach(SortFieldEnum::all() as $col)
+    {
+      $rank = $this->getUser()['rank_' . $col];
+
+      $link = new A(
+        '/users/' . $col . '/' . ceil($rank / 50),
+        $this->getOrdinal($this->getUser()['rank_' . $col])
+      );
+
+      $cols[] = new Td($link);
+    }
+
+    return new Tr($cols);
+  }
+
+  public function getPercentileRow()
+  {
+    $cols = [
+      new Th('Percentile')
+    ];
+
+    foreach(SortFieldEnum::all() as $col)
+    {
+      $rank = $this->getUser()['rank_' . $col];
+      $percent = ($rank / $this->getUsersCount()) * 100;
+
+      $cols[] = new Td('Top ' . round($percent) . '%');
+    }
+
+    return new Tr($cols);
   }
 }

@@ -16,8 +16,6 @@ use Jleagle\SteamClient\Responses\FriendResponse;
 
 abstract class AbstractController extends LayoutController
 {
-
-
   protected function _getApi()
   {
     return $this->getConfigItem('steam', 'api_key');

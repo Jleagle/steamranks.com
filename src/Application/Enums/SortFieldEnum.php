@@ -15,8 +15,8 @@ class SortFieldEnum
       self::LEVEL,
       self::GAMES,
       self::BADGES,
-      self::TIME,
       self::FRIENDS,
+      self::TIME,
     ];
   }
 }

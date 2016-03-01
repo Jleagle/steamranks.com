@@ -5,6 +5,8 @@ use Jleagle\Steam\Application\Structs\LevelRowStruct;
 
 class ExperienceView extends AbstractView
 {
+  const ROWS = 2000;
+
   protected $_level;
 
   /**
@@ -39,7 +41,7 @@ class ExperienceView extends AbstractView
       ]
     );
 
-    foreach(range(1, 1001) as $level)
+    foreach(range(1, self::ROWS + 1) as $level)
     {
       $diff = ceil(($level + 1) / 10);
       $diff = $diff * 100;
@@ -70,7 +72,7 @@ class ExperienceView extends AbstractView
       }
     }
 
-    $slice = array_slice($rows, 0, 1000);
+    $slice = array_slice($rows, 0, self::ROWS);
     return array_chunk($slice, 10);
   }
 

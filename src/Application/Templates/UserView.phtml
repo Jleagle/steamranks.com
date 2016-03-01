@@ -27,33 +27,7 @@
 
 <?= $this->getAd() ?>
 
-
-<?php
-if($this->getUser()['xp'])
-{
-  $xp = $this->getUser()['xp'];
-  $needed = $this->getUser()['xp_needed'];
-  $left = $this->getUser()['xp_current'];
-  $right = $xp + $needed;
-  $range = $right - $left;
-  $done = $range - $needed;
-  $percent = ($done / $range) * 100;
-  $nicePercent = max(round($percent), 10); // So you can always see the text
-}
-else
-{
-  $left = $xp = $right = $nicePercent = 0;
-  $percent = 0;
-}
-?>
-<a class="progress" data-toggle="tooltip" data-placement="bottom"
-   title="<?= $left . 'xp - ' . $xp . 'xp - ' . $right . 'xp' ?>"
-   href="/experience/<?= $this->getUser()['level'] ?>" style="display: block;">
-  <div class="progress-bar progress-bar-striped"
-       style="width: <?= $percent ?>%;">
-    Level <?= $this->getUser()['level'] . ' (' . $nicePercent . '%)' ?>
-  </div>
-</a>
+<?= $this->getXpBar() ?>
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -87,9 +61,7 @@ else
     <table class="table table-condensed table-details">
       <tr>
         <td>Games Played</td>
-        <td><?= number_format(
-            count(array_filter($this->getUser()['games_json']))
-          ) ?></td>
+        <td><?= $this->getGamesPlayed() ?></td>
       </tr>
       <tr>
         <td>Time on Steam</td>

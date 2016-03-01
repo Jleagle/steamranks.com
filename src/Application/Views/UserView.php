@@ -2,11 +2,13 @@
 namespace Jleagle\Steam\Application\Views;
 
 use Jleagle\HtmlBuilder\Tags\A;
+use Jleagle\HtmlBuilder\Tags\Div;
 use Jleagle\HtmlBuilder\Tags\Tables\Td;
 use Jleagle\HtmlBuilder\Tags\Tables\Th;
 use Jleagle\HtmlBuilder\Tags\Tables\Tr;
 use Jleagle\Steam\Application\Enums\SortFieldEnum;
 use Jleagle\Steam\Application\Models\User;
+use Jleagle\Steam\Application\Structs\UserXpStruct;
 use Packaged\Helpers\Arrays;
 
 class UserView extends AbstractView
@@ -51,6 +53,39 @@ class UserView extends AbstractView
   public function getUsersCount()
   {
     return $this->_usersCount;
+  }
+
+  public function getGamesPlayed()
+  {
+    $games = $this->getUser()['games_json'];
+    return number_format(count(array_filter($games)));
+  }
+
+  public function getXpBar()
+  {
+    $xp = UserXpStruct::fromModel($this->_user);
+
+    $width = max($xp->fromLastLevelPercent, 10);
+
+    $div = new Div();
+    $div->addClass('progress-bar progress-bar-striped');
+    $div->setAttribute('style', 'width:' . $width . '%');
+    $div->setContent(
+      'Level ' . $this->_user['level'] . ' (' . $xp->fromLastLevelPercent . '%)'
+    );
+
+    $a = new A('/experience/' . $this->getUser()['level'], $div);
+    $a->setAttributes(
+      [
+        'class'          => 'progress',
+        'data-toggle'    => 'tooltip',
+        'data-placement' => 'bottom',
+        'title'          => number_format($xp->startOfLevel) . 'XP',
+        'style'          => 'display: block;',
+      ]
+    );
+
+    return $a;
   }
 
   public function getValueRow()

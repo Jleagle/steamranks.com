@@ -10,7 +10,9 @@ use Jleagle\Steam\Application\Enums\SortFieldEnum;
 <div class="page-header">
   <h1>
     Users
-    <small class="pull-right"><?= $this->getCount() ?> Users</small>
+    <small class="pull-right">
+      <?= number_format($this->getCount()) ?> Users
+    </small>
   </h1>
 </div>
 

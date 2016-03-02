@@ -150,10 +150,15 @@ class UserView extends AbstractView
 
     foreach(SortFieldEnum::all() as $col)
     {
+      $val = 'Soon';
       $rank = $this->getUser()['rank_' . $col];
-      $percent = ($rank / $this->getUsersCount()) * 100;
+      if($rank)
+      {
+        $percent = ($rank / $this->getUsersCount()) * 100;
+        $val = 'Top ' . round($percent + 1) . '%';
+      }
 
-      $cols[] = new Td('Top ' . round($percent + 1) . '%');
+      $cols[] = new Td($val);
     }
 
     return new Tr($cols);

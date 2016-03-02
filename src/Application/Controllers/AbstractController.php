@@ -53,7 +53,7 @@ abstract class AbstractController extends LayoutController
         $user->{$r} = Manager::table($r)
           ->select('id')
           ->where('user_id', '=', $user->id)
-          ->pluck('user_id');
+          ->pluck('id');
       }
 
       // Steam API stuff

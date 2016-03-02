@@ -69,6 +69,14 @@
           <?= $this->getMinutes(time() - $this->getUser()['time_on_steam']) ?>
         </td>
       </tr>
+      <tr>
+        <td>Last Updated</td>
+        <td>
+          <?= $this->getMinutes(
+            time() - strtotime($this->getUser()['updated_at'])
+          ) ?>
+        </td>
+      </tr>
     </table>
 
   </div>

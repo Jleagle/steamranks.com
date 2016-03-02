@@ -5,13 +5,6 @@
 ?>
 
 <div class="page-header">
-  <?php if(!$this->getUser()['rank_level'])
-  { ?>
-    <div class="alert alert-danger" role="alert">
-      <?= $this->getUser()['name'] ?>
-      is new and has not been ranked yet, check back in 24 hours.
-    </div>
-  <? } ?>
   <h1>
     <img src="<?= $this->getUser()['avatar_large'] ?>" alt="" class="avatar"/>
     <?= $this->getUser()['name']; ?>

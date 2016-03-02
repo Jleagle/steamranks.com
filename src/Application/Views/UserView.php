@@ -121,12 +121,15 @@ class UserView extends AbstractView
 
     foreach(SortFieldEnum::all() as $col)
     {
+      $link = 'Soon';
       $rank = $this->getUser()['rank_' . $col];
-
-      $link = new A(
-        '/users/' . $col . '/' . ceil($rank / 50),
-        $this->getOrdinal($this->getUser()['rank_' . $col])
-      );
+      if($rank)
+      {
+        $link = new A(
+          '/users/' . $col . '/' . ceil($rank / 50),
+          $this->getOrdinal($this->getUser()['rank_' . $col])
+        );
+      }
 
       $cols[] = new Td($link);
     }

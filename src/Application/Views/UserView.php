@@ -96,14 +96,19 @@ class UserView extends AbstractView
 
     foreach(SortFieldEnum::all() as $col)
     {
+      $value = Arrays::value($this->getUser(), $col, 0);
+      $formatted = number_format($value);
+
       switch($col)
       {
+        case SortFieldEnum::LEVEL:
+          $val = new A('/experience/' . $value, $formatted);
+          break;
         case SortFieldEnum::TIME:
-          $val = Arrays::value($this->getUser(), $col, 0);
-          $val = $this->getMinutes($val * 60);
+          $val = $this->getMinutes($value * 60);
           break;
         default:
-          $val = number_format(Arrays::value($this->getUser(), $col, 0));
+          $val = $formatted;
           break;
       }
 

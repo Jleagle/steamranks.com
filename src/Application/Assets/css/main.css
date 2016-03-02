@@ -60,6 +60,12 @@ img.steam {
 }
 
 /**/
+.table>thead>tr>th
+{
+  border-bottom: none;
+}
+
+/**/
 .avatar {
   height:       59px;
   float:        left;

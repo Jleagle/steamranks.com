@@ -88,10 +88,12 @@ class UsersController extends AbstractController
     $usersCount = $cache->retrieve();
 
     // Title
-    $this->layout()->setData(
-      'title',
-      $user->name . ' (' . $user->real_name . ')'
-    );
+    $title = $user->name;
+    if($user->real_name)
+    {
+      $title .= ' (' . $user->real_name . ')';
+    }
+    $this->layout()->setData('title', $title);
 
     return new UserView($user, $usersCount);
   }

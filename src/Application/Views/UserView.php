@@ -148,7 +148,7 @@ class UserView extends AbstractView
       $rank = $this->getUser()['rank_' . $col];
       $percent = ($rank / $this->getUsersCount()) * 100;
 
-      $cols[] = new Td('Top ' . round($percent) . '%');
+      $cols[] = new Td('Top ' . round($percent + 1) . '%');
     }
 
     return new Tr($cols);

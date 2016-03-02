@@ -31,7 +31,8 @@ class UserXpStruct extends AbstractStruct
       $struct->endOfLevel = $struct->currentXp + $struct->toNextLevel;
       $struct->levelRange = $struct->endOfLevel - $struct->startOfLevel;
       $struct->fromLastLevel = $struct->levelRange - $struct->toNextLevel;
-      $struct->fromLastLevelPercent = ($struct->fromLastLevel / $struct->levelRange) * 100;
+      $struct->fromLastLevelPercent
+        = round(($struct->fromLastLevel / $struct->levelRange) * 100);
     }
 
     return $struct;
